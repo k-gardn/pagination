@@ -6,11 +6,10 @@ export const instance = axios.create({
 
 export const commentAPI = {
   getCommentList: () => instance.get(`/comments`),
-  // getComments: (data: number) =>
-  //   instance.get(`/comments?_page=${data}&_limit=4&_order=desc&_sort=id`),
-  // addComment: (data: AddData) => instance.post(`/comments`, data),
-  // getCommentDetail: (commentsId: number) => instance.get(`/comments/${commentsId}`),
-  // updateComment: (data: UpdateData, commentsId: number) =>
-  //   instance.put(`/comments/${commentsId}`, data),
-  // deleteComment: (commentsId: number) => instance.delete(`/comments/${commentsId}`),
+  getPage: (page: number) =>
+    // TODO: limitPage(4)도 설정할까
+    instance.get(
+      // `/comments?_page=${totalPage}&_limit=${limitContent}&_order=desc&_sort=id`
+      `/comments?_page=${page}&_limit=4&_order=desc&_sort=id`
+    ),
 };

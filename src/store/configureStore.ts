@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import commentSlice from "../modules/comment";
+import commentSlice from "../modules/commentSlice";
 import logger from "redux-logger";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 

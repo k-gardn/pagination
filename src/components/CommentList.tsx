@@ -1,40 +1,41 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../hook/useRedux";
-import { getComment } from "../modules/comment";
+import { editFlag, getComment } from "../modules/commentSlice";
 
 function CommentList() {
+  const [editMode, setEditMode] = useState(false);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getComment());
-    // setAllList([...list]);
   }, [dispatch]);
 
-  const { comment } = useAppSelector((state) => state.commentSlice);
-  console.log(comment);
+  const { eachPage } = useAppSelector((state) => state.commentSlice);
+  console.log(eachPage);
 
-  // useEffect(() => {
-  //   setAllList([...list]);
-  // }, [dispatch, allList]);
+  useEffect(() => {
+    dispatch(editFlag(editMode));
+  }, [dispatch]);
+
   return (
     <>
-      {comment?.map((comment: any, key: number) => {
+      {eachPage?.map((comment: any, key: number) => {
         return (
           <Comment key={key}>
             <img src={comment.profile_url} alt="" />
-
             {comment.author}
-
             <CreatedAt>{comment.createdAt}</CreatedAt>
-
             <Content>{comment.content}</Content>
-
             <Button>
-              <a>수정</a>
-              <a>삭제</a>
+              <button
+                onClick={() => {
+                  setEditMode(true);
+                }}
+              >
+                수정
+              </button>
+              <button>삭제</button>
             </Button>
 
             <hr />
@@ -72,7 +73,7 @@ const Content = styled.div`
 const Button = styled.div`
   text-align: right;
   margin: 10px 0;
-  & > a {
+  & button {
     margin-right: 10px;
     padding: 0.375rem 0.75rem;
     border-radius: 0.25rem;
