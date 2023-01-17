@@ -1,15 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import CommentList from "../components/CommentList";
 
 function CommentListContainer() {
-  useEffect(() => {
-    first;
-
-    return () => {
-      second;
-    };
-  }, [third]);
-
   return <CommentList />;
 }
 

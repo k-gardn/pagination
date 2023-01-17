@@ -1,11 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import comment from "../modules/comment";
+import commentSlice from "../modules/comment";
 import logger from "redux-logger";
+import { TypedUseSelectorHook, useSelector } from "react-redux";
 
 // const middleware = [logger];
 export const store = configureStore({
   reducer: {
-    comment,
+    commentSlice,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   devTools: process.env.NODE_ENV !== "production",
@@ -13,5 +14,4 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-
 export default store;
