@@ -1,18 +1,23 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../hook/useRedux";
-import { editFlag, getComment } from "../modules/commentSlice";
+import {
+  deleteComment,
+  detailInfo,
+  editFlag,
+  getComment,
+} from "../modules/commentSlice";
 
 function CommentList() {
   const [editMode, setEditMode] = useState(false);
   const dispatch = useAppDispatch();
 
+  const { eachPage } = useAppSelector((state) => state.commentSlice);
+  console.log(eachPage);
+
   useEffect(() => {
     dispatch(getComment());
   }, [dispatch]);
-
-  const { eachPage } = useAppSelector((state) => state.commentSlice);
-  console.log(eachPage);
 
   useEffect(() => {
     dispatch(editFlag(editMode));
@@ -22,24 +27,34 @@ function CommentList() {
     <>
       {eachPage?.map((comment: any, key: number) => {
         return (
-          <Comment key={key}>
-            <img src={comment.profile_url} alt="" />
-            {comment.author}
-            <CreatedAt>{comment.createdAt}</CreatedAt>
-            <Content>{comment.content}</Content>
-            <Button>
-              <button
-                onClick={() => {
-                  setEditMode(true);
-                }}
-              >
-                수정
-              </button>
-              <button>삭제</button>
-            </Button>
+          <form>
+            <Comment key={key}>
+              <img src={comment.profile_url} alt="" />
+              {comment.author}
+              <CreatedAt>{comment.createdAt}</CreatedAt>
+              <Content>{comment.content}</Content>
+              <Button>
+                <button
+                  onClick={() => {
+                    setEditMode(true);
+                    dispatch(detailInfo(comment?.id));
+                  }}
+                >
+                  수정
+                </button>
+                <button
+                  type="submit"
+                  onClick={() => {
+                    dispatch(deleteComment(comment?.id));
+                  }}
+                >
+                  삭제
+                </button>
+              </Button>
 
-            <hr />
-          </Comment>
+              <hr />
+            </Comment>
+          </form>
         );
       })}
     </>

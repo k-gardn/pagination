@@ -1,0 +1,22 @@
+export type contentInfo = {
+  profileUrl: string;
+  author: string;
+  content: string;
+  createdAt: string;
+};
+
+export type InitState = {
+  comment: UpdateData[];
+  eachPage: UpdateData[];
+  page: number;
+  editMode: boolean;
+  detailId: number;
+};
+
+export type UpdateData = {
+  id: number;
+  profile_url: string;
+  author: string;
+  content: string;
+  createdAt: string;
+};
