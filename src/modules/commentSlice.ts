@@ -1,7 +1,7 @@
-import { InitState } from "./../util/type";
+import { InitState, UpdateData } from "./../util/type";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { commentAPI } from "../apis/request";
-import { contentInfo } from "../components/EditForm";
+import { contentInfo } from "./../util/type";
 
 const initialState: InitState = {
   comment: [],
@@ -50,6 +50,19 @@ export const createComment = createAsyncThunk(
   }
 );
 
+export const updateComment = createAsyncThunk(
+  "UPDATE_COMMENT",
+  async (payload: UpdateData, thunkAPI) => {
+    try {
+      const { data } = await commentAPI.updateOne(payload);
+      console.log(data);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const deleteComment = createAsyncThunk(
   "DELETE_COMMENT",
   async (commentId: number, thunkAPI) => {
@@ -87,11 +100,11 @@ const commentSlice = createSlice({
     builder.addCase(createComment.fulfilled, (state, action) => {
       state.comment.unshift(action.payload);
     });
-    // builder.addCase(deleteComment.fulfilled, (state, action) => {
-    //   state.comment = state.comment.filter(
-    //     (comment) => comment.id !== action.payload.id
-    //   );
-    // });
+    builder.addCase(updateComment.fulfilled, (state, action) => {
+      state.comment = state.comment.map((comment) =>
+        comment.id === action.payload.id ? { ...action.payload } : comment
+      );
+    });
   },
 });
 export const { presentPage, editFlag, detailInfo } = commentSlice.actions;

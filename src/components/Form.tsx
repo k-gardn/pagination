@@ -1,35 +1,60 @@
-import React, { ReactText, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useDebounce } from "../hook/useDebounce";
 import { useAppDispatch, useAppSelector } from "../hook/useRedux";
-import { createComment } from "../modules/commentSlice";
+import { createComment, updateComment } from "../modules/commentSlice";
+import { UpdateData } from "../util/type";
 
 function Form() {
   const dispatch = useAppDispatch();
-  const [inputs, setInputs] = useState({
-    profileUrl: "",
-    witter: "",
-    content: "",
-  });
-  // const contentRef = useRef();
-  const [profileUrl, setProfileUrl] = useState("");
-  const [author, setAuthor] = useState("");
-  const [content, setcontent] = useState("");
-  const [createdAt, setcreatedAt] = useState("");
 
-  const { editMode } = useAppSelector((state) => state.commentSlice);
+  const { editMode, eachPage, detailId } = useAppSelector(
+    (state) => state.commentSlice
+  );
+
+  const filtered = eachPage?.filter((item: any) => item?.id === detailId);
+  const EditComment = filtered[0];
+  console.log("Form >> EditComment", EditComment);
+
+  const [profile_Url, setProfile_Url] = useState(EditComment?.profile_Url);
+  const [author, setAuthor] = useState(EditComment?.author);
+  const [content, setcontent] = useState(EditComment?.content);
+  const [createdAt, setcreatedAt] = useState(EditComment?.createdAt);
+
   console.log(editMode);
+
+  const [isEdit, setIsEdit] = useState(false);
+  useEffect(() => {
+    // dispatch(editFlag(isEdit));
+    setIsEdit(editMode);
+  }, [dispatch, editMode, detailId]);
+
+  useEffect(() => {
+    if (isEdit) {
+      setProfile_Url(EditComment?.profile_Url);
+      setAuthor(EditComment?.author);
+      setcontent(EditComment?.content);
+      setcreatedAt(EditComment?.createdAt);
+    }
+  }, [dispatch, detailId, isEdit]);
+
+  console.log(isEdit);
 
   const addCommentHandler = (e: React.FormEvent<HTMLFormElement>) => {
     // e.preventDefault();
     const formData = {
-      profileUrl,
+      id: EditComment.id,
+      profile_Url,
       author,
       content,
       createdAt,
     };
-    dispatch(createComment(formData));
+    if (isEdit) {
+      dispatch(updateComment(formData));
+    } else {
+      dispatch(createComment(formData));
+    }
   };
+
   return (
     <FormStyle>
       <form onSubmit={addCommentHandler}>
@@ -37,9 +62,9 @@ function Form() {
           type="text"
           name="profile_url"
           placeholder="https://picsum.photos/id/1/50/50"
-          value={profileUrl}
+          value={profile_Url}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setProfileUrl(e.target.value)
+            setProfile_Url(e.target.value)
           }
           required
         />
@@ -76,7 +101,11 @@ function Form() {
           required
         />
         <br />
-        <button type="submit">등록</button>
+        {isEdit ? (
+          <button type="submit">완료</button>
+        ) : (
+          <button type="submit">등록</button>
+        )}
       </form>
     </FormStyle>
   );

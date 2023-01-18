@@ -1,5 +1,5 @@
 import axios from "axios";
-import { contentInfo } from "../components/EditForm";
+import { contentInfo, UpdateData } from "../util/type";
 
 export const instance = axios.create({
   baseURL: "http://localhost:4000",
@@ -15,4 +15,5 @@ export const commentAPI = {
     ),
   postComment: (data: contentInfo) => instance.post(`/comments`, data),
   deleteOne: (commentId: number) => instance.delete(`/comments/${commentId}`),
+  updateOne: (data: UpdateData) => instance.put(`/comments/${data.id}`, data),
 };

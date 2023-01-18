@@ -1,5 +1,5 @@
 export type contentInfo = {
-  profileUrl: string;
+  profile_Url: string;
   author: string;
   content: string;
   createdAt: string;
@@ -15,7 +15,7 @@ export type InitState = {
 
 export type UpdateData = {
   id: number;
-  profile_url: string;
+  profile_Url: string;
   author: string;
   content: string;
   createdAt: string;

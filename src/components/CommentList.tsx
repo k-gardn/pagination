@@ -9,25 +9,22 @@ import {
 } from "../modules/commentSlice";
 
 function CommentList() {
-  const [editMode, setEditMode] = useState(false);
   const dispatch = useAppDispatch();
 
-  const { eachPage } = useAppSelector((state) => state.commentSlice);
+  const { eachPage, editMode } = useAppSelector((state) => state.commentSlice);
   console.log(eachPage);
 
   useEffect(() => {
     dispatch(getComment());
   }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(editFlag(editMode));
-  }, [dispatch]);
-
   return (
     <>
       {eachPage?.map((comment: any, key: number) => {
         return (
-          <form>
+          <form
+          // onSubmit={() => setEditMode(false)}
+          >
             <Comment key={key}>
               <img src={comment.profile_url} alt="" />
               {comment.author}
@@ -35,9 +32,11 @@ function CommentList() {
               <Content>{comment.content}</Content>
               <Button>
                 <button
-                  onClick={() => {
-                    setEditMode(true);
+                  onClick={(e) => {
+                    e.preventDefault();
+                    // setIsEdit(true);
                     dispatch(detailInfo(comment?.id));
+                    dispatch(editFlag(true));
                   }}
                 >
                   수정

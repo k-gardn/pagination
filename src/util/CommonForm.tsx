@@ -1,16 +1,8 @@
 import styled from "styled-components";
-import { contentInfo } from "../components/EditForm";
-
-// export interface contentInfo {
-//   profileUrl: string;
-//   writer: string;
-//   content: string;
-// }
+import { contentInfo } from "./type";
 
 export const CommonForm = (inputValue: contentInfo) => {
-  const { profileUrl, author, content } = inputValue;
-  // const [inputs, setInputs] = useState<ResultInfo[] | undefined>([]);
-  // const contentRef = useRef();
+  const { profile_Url, author, content } = inputValue;
 
   return (
     <FormStyle>
@@ -19,7 +11,7 @@ export const CommonForm = (inputValue: contentInfo) => {
           type="text"
           name="profile_url"
           placeholder="https://picsum.photos/id/1/50/50"
-          value={profileUrl}
+          value={profile_Url}
           required
         />
         <br />
@@ -28,18 +20,11 @@ export const CommonForm = (inputValue: contentInfo) => {
         <textarea
           name="content"
           placeholder="내용"
-          // ref={contentRef}
           value={content}
           required
         ></textarea>
         <br />
-        <input
-          type="text"
-          name="createdAt"
-          placeholder="2020-05-30"
-          // value={createdAt}
-          required
-        />
+        <input type="text" name="createdAt" placeholder="2020-05-30" required />
         <br />
         <button type="submit">등록</button>
       </form>
