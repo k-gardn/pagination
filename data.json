@@ -128,7 +128,7 @@
     },
     {
       "id": 19,
-      "profile_url": "https://picsum.photos/id/19/50/50",
+      "profile_Url": "ㄴㅇㄹㄴㄹㅎ",
       "author": "abc_19",
       "content": "막히면 대답은 빨리 해주나요",
       "createdAt": "2022-03-19"
@@ -153,6 +153,20 @@
       "author": "ㄴㅇㄹㄴㅇㄹ",
       "content": "수정이 되는건가요",
       "createdAt": "ㄴㅇㄹㄴㅇㄹ"
+    },
+    {
+      "profile_Url": "sdfsdf",
+      "author": "sdfsdf",
+      "content": "sdfsdf",
+      "createdAt": "sdfsdf",
+      "id": 23
+    },
+    {
+      "id": 24,
+      "profile_Url": "sdfsdfdddd",
+      "author": "dddsdfsdf",
+      "content": "sdfsdfddd",
+      "createdAt": "sdfsdfsfddd"
     }
   ]
 }

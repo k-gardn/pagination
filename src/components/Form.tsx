@@ -15,10 +15,10 @@ function Form() {
   const EditComment = filtered[0];
   console.log("Form >> EditComment", EditComment);
 
-  const [profile_Url, setProfile_Url] = useState(EditComment?.profile_Url);
-  const [author, setAuthor] = useState(EditComment?.author);
-  const [content, setcontent] = useState(EditComment?.content);
-  const [createdAt, setcreatedAt] = useState(EditComment?.createdAt);
+  const [profile_Url, setProfile_Url] = useState("");
+  const [author, setAuthor] = useState("");
+  const [content, setcontent] = useState("");
+  const [createdAt, setcreatedAt] = useState("");
 
   console.log(editMode);
 
@@ -42,7 +42,7 @@ function Form() {
   const addCommentHandler = (e: React.FormEvent<HTMLFormElement>) => {
     // e.preventDefault();
     const formData = {
-      id: EditComment.id,
+      id: EditComment?.id,
       profile_Url,
       author,
       content,

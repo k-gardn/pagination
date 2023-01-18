@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../hook/useRedux";
 import {
@@ -11,7 +11,7 @@ import {
 function CommentList() {
   const dispatch = useAppDispatch();
 
-  const { eachPage, editMode } = useAppSelector((state) => state.commentSlice);
+  const { eachPage } = useAppSelector((state) => state.commentSlice);
   console.log(eachPage);
 
   useEffect(() => {
@@ -23,9 +23,10 @@ function CommentList() {
       {eachPage?.map((comment: any, key: number) => {
         return (
           <form
-          // onSubmit={() => setEditMode(false)}
+            key={comment.id}
+            // onSubmit={() => setEditMode(false)}
           >
-            <Comment key={key}>
+            <Comment>
               <img src={comment.profile_url} alt="" />
               {comment.author}
               <CreatedAt>{comment.createdAt}</CreatedAt>
